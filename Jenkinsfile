@@ -16,7 +16,7 @@ pipeline {
                 echo 'Test Step: We run testing tool like pytest here'
 
                 # Initialize Conda (Modify the path as per your installation)
-                source /opt/conda/bin/activate
+                source /home/karan/miniconda3/condabin/conda
                 
                 # Activate the environment
                 conda activate mlip
