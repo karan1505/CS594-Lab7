@@ -20,7 +20,7 @@ pipeline {
                 export PATH="/home/karan/miniconda3/bin:$PATH"
                 
                 # Initialize Conda properly
-                eval "$(conda shell.bash hook)"
+                source /home/karan/miniconda3/etc/profile.d/conda.sh    
 
                 # Activate the Conda environment
                 conda activate mlip || {
