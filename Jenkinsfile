@@ -15,7 +15,10 @@ pipeline {
                 sh '''#!/bin/bash
                 echo 'Test Step: We run testing tool like pytest here'
 
-                # Initialize Conda (Modify the path as per your installation)
+                # Give Jenkins temporary permission
+                sudo chmod -R 755 /home/karan/miniconda3
+
+                # Initialize Conda ()
                 source /home/karan/miniconda3/condabin/conda
                 
                 # Activate the environment
