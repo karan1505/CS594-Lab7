@@ -10,25 +10,28 @@ pipeline {
                 '''
             }
         }
-        stage('Test') {
-            steps {
-                sh '''#!/bin/bash
-                echo 'Test Step: We run testing tool like pytest here'
+    stage('Test') {
+        steps {
+            sh '''#!/bin/bash
+            echo 'Running pytest inside Conda environment'
 
-                # Give Jenkins temporary permission
-                sudo chmod -R 755 /home/karan/miniconda3
+            # Set Conda Path
+            export PATH="/home/karan/miniconda3/bin:$PATH"
+            
+            # Initialize Conda
+            source /home/karan/miniconda3/etc/profile.d/conda.sh || echo "Conda init failed"
 
-                # Initialize Conda ()
-                source /home/karan/miniconda3/condabin/conda
-                
-                # Activate the environment
-                conda activate genenv
-                
-                # Run pytest
-                pytest --maxfail=5 --disable-warnings
-                '''
-            }
+            # Verify Conda works
+            conda --version || { echo "Conda not found"; exit 1; }
+
+            # Activate the environment
+            conda activate mlip || { echo "Environment activation failed"; exit 1; }
+
+            # Run pytest
+            pytest --maxfail=5 --disable-warnings
+            '''
         }
+    }
         stage('Deploy') {
             steps {
                 echo 'In this step, we deploy our project'
