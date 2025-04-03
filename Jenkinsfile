@@ -19,7 +19,7 @@ pipeline {
                 source /home/karan/miniconda3/condabin/conda
                 
                 # Activate the environment
-                conda activate mlip
+                conda activate genenv
                 
                 # Run pytest
                 pytest --maxfail=5 --disable-warnings
