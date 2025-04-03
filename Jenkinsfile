@@ -13,23 +13,16 @@ pipeline {
         
         stage('Test') {
             steps {
-                sh '''#!/bin/bash
+                sh '''#!/bin/bash -l
                 echo 'Running pytest inside Conda environment'
 
                 # Set Conda Path
                 export PATH="/home/karan/miniconda3/bin:$PATH"
                 
-                # Initialize Conda
-                source /home/karan/miniconda3/etc/profile.d/conda.sh || {
-                    echo "Conda init failed"; exit 1;
-                }
+                # Initialize Conda properly
+                eval "$(conda shell.bash hook)"
 
-                # Verify Conda works
-                conda --version || {
-                    echo "Conda not found"; exit 1;
-                }
-
-                # Activate the correct environment
+                # Activate the Conda environment
                 conda activate mlip || {
                     echo "Environment activation failed"; exit 1;
                 }
@@ -39,7 +32,7 @@ pipeline {
                     echo "Python not found in environment"; exit 1;
                 }
                 pytest --version || {
-                    echo "pytest not found, ensure it is installed in mlib"; exit 1;
+                    echo "pytest not found, ensure it is installed in mlip"; exit 1;
                 }
 
                 # Run pytest
